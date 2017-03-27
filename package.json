@@ -4,13 +4,17 @@
   "version": "1.0.0",
   "author": "lovenery",
   "private": true,
+  "main": "electron.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
+    "start": "electron ."
   },
   "dependencies": {
     "axios": "^0.15.3",
-    "vue": "^2.2.1"
+    "electron": "^1.6.2",
+    "vue": "^2.2.1",
+    "vue-material": "^0.7.1"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",
