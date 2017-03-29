@@ -5,10 +5,11 @@
 ## Build Setup
 
 ``` bash
+# Install Dependencies
 npm install
 
-# Dev Server on http://localhost:8080
-npm run dev
+# Build App
+npm run build
 
 # Start App
 npm start
