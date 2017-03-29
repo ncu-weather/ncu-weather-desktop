@@ -5,14 +5,7 @@ const {app, BrowserWindow} = require('electron')
 let win = null
 
 app.on('ready', function () {
-  win = new BrowserWindow({width: 1000, height: 600})
-
-  win.loadURL('http://localhost:8080')
-  // win.loadURL(url.format({
-  //   pathname: path.join(__dirname, 'index.html'),
-  //   protocol: 'file:',
-  //   slashes: true
-  // }))
+  createWindow()
 
   win.on('closed', function () {
     win = null
@@ -31,3 +24,14 @@ app.on('window-all-closed', function () {
     app.quit()
   }
 })
+
+function createWindow () {
+  win = new BrowserWindow({width: 1000, height: 600})
+
+  win.loadURL('http://localhost:8080')
+  // win.loadURL(url.format({
+  //   pathname: path.join(__dirname, 'index.html'),
+  //   protocol: 'file:',
+  //   slashes: true
+  // }))
+}
