@@ -6,11 +6,6 @@ let win = null
 
 app.on('ready', function () {
   createWindow()
-
-  win.on('closed', function () {
-    win = null
-  })
-
 })
 
 app.on('activate', () => {
@@ -34,4 +29,8 @@ function createWindow () {
   //   protocol: 'file:',
   //   slashes: true
   // }))
+
+  win.on('closed', function () {
+    win = null
+  })
 }
