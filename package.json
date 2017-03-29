@@ -10,9 +10,9 @@
     "start": "electron .",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
     "package": "electron-packager . --out=out",
-    "package_mac": "electron-packager . 中大即時氣象 --platform=darwin --arch=x64 --out=out --asar=true --icon=src/assets/icon.icns",
-    "package_win32": "electron-packager . 中大即時氣象 --platform=win32 --arch=x64 --out=out --asar=true --icon=src/assets/icon.ico",
-    "package_linux": "electron-packager . 中大即時氣象 --platform=linux --arch=x64 --out=out --asar=true"
+    "package_mac": "electron-packager . 中大即時氣象 --platform=darwin --arch=x64 --out=out --asar=true --appCopyright='Copyright © 2017 ncu-weather. All Rights Reserved.' --icon=src/assets/icon.icns",
+    "package_win32": "electron-packager . 中大即時氣象 --platform=win32 --arch=x64 --out=out --asar=true --appCopyright='Copyright © 2017 ncu-weather. All Rights Reserved.' --icon=src/assets/icon.ico --win32metadata.CompanyName=ncu-weather --win32metadata.FileDescription=中大即時氣象 --win32metadata.OriginalFilename=中大即時氣象.exe --win32metadata.ProductName=中大即時氣象",
+    "package_linux": "electron-packager . 中大即時氣象 --platform=linux --arch=x64 --out=out --asar=true --appCopyright='Copyright © 2017 ncu-weather. All Rights Reserved.'"
   },
   "dependencies": {
     "axios": "^0.15.3",
