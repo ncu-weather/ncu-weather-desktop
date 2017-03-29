@@ -15,15 +15,36 @@
     ></md-progress>
   </div>
 
-  <md-list>
+  <md-card v-if="isNcuDead">
+    <md-card-header>
+      <div class="md-title">
+        <md-icon class="md-accent">error_outline</md-icon>
+        完全無法取得資料
+      </div>
+    </md-card-header>
+    <md-card-content>
+      請檢查網路連線，或是 http://pblap.atm.ncu.edu.tw 已失聯，也可能此應用程式已經過期。
+    </md-card-content>
+    <md-card-actions>
+      <md-button class="md-raised md-accent" @click.native="refresh()">
+        <md-icon>refresh</md-icon>重新整理
+      </md-button>
+      <span style="flex: 1"></span>
+    </md-card-actions>
+  </md-card>
+
+  <md-list v-if="!isNcuDead">
     <md-list-item>
       <md-icon>cloud_queue</md-icon>
-      <span>體感溫度：{{ apparentTemperature }}&deg;C</span>
+      <span>
+        <span v-if="!isNcuAtmDead">體感溫度：{{ apparentTemperature }} &deg;C</span>
+        <md-chip class="cursor-pointer" v-if="isNcuAtmDead" @click.native="isNcuAtmDead=false;refresh()">體感溫度無法取得，請稍候點我再試！</md-chip>
+      </span>
       <md-spinner :md-size="30" md-indeterminate class="md-accent" v-show="loading"></md-spinner>
     </md-list-item>
     <md-list-item>
       <md-icon>cloud</md-icon>
-      <span>現在溫度：{{ wt.temperature }}&deg;C</span>
+      <span>現在溫度：{{ wt.temperature }} &deg;C</span>
       <md-spinner :md-size="30" md-indeterminate class="md-accent" v-show="loading"></md-spinner>
     </md-list-item>
     <md-list-item>
@@ -61,7 +82,9 @@ export default {
         temperature: loadingStr,
         precip: loadingStr
       },
-      loading: true
+      loading: true,
+      isNcuDead: false,
+      isNcuAtmDead: false,
     }
   },
   created () {
@@ -80,6 +103,7 @@ export default {
   },
   methods: {
     getNcu() {
+      this.isNcuDead = false
       this.$http.get('https://ncu.herokuapp.com/ncu')
         .then( response => {
           this.loading = false
@@ -87,9 +111,11 @@ export default {
         })
         .catch( error => {
           console.log(error)
+          this.isNcuDead = true
         })
     },
     getNcuAtm() {
+      this.isNcuAtmDead = false
       this.$http.get('https://ncu.herokuapp.com/ncuatm')
         .then( response => {
           this.loading = false
@@ -97,13 +123,19 @@ export default {
         })
         .catch( error => {
           console.log(error)
+          this.isNcuAtmDead = true
+          this.getNcu()
         })
     },
     refresh() {
       this.wt.temperature = loadingStr
       this.wt.precip = loadingStr
       this.loading = true
-      this.getNcuAtm()
+      if (!this.isNcuAtmDead) {
+        this.getNcuAtm()
+      } else {
+        this.getNcu()
+      }
     }
   }
 }
@@ -112,5 +144,8 @@ export default {
 <style>
 #progress-bar {
   height: 5px;
+}
+.cursor-pointer {
+  cursor: pointer;
 }
 </style>
