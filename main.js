@@ -21,7 +21,15 @@ app.on('window-all-closed', function () {
 })
 
 function createWindow () {
-  win = new BrowserWindow({width: 1000, height: 600})
+  let windowOptions = {
+    width: 1000,
+    minWidth: 375,
+    height: 600
+  }
+  if (process.platform === 'linux') {
+    windowOptions.icon = path.join(__dirname, '/src/assets/icon.png')
+  }
+  win = new BrowserWindow(windowOptions)
 
   // win.loadURL('http://localhost:8080')
   win.loadURL(url.format({
